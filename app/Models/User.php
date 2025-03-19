@@ -18,8 +18,16 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'username',
         'fullname',
-        'email'    ];
+        'email'
+    ];
 
+    /**
+     * Groups relationship
+     */
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
             
     /**
      * getJWTIdentifier

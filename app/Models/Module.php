@@ -33,13 +33,23 @@ class Module extends Model
      */
     public function users()
     {
+        //TODO: correggere
+
+        return $this->belongsToMany(User::class, 'group_user', 'group_id', 'user_id')
+            ->join('groups', 'groups.id', '=', 'group_user.group_id')
+            ->join('modules', 'modules.group_id', '=', 'groups.id')
+            ->whereColumn('groups.id', 'modules.group_id')
+            ->select('users.*');
+            
+        /*
         return $this->hasManyThrough(
-            User::class, // Tabella di destinazione (users)
+            User::class, 
             Group::class, // Tabella intermedia (groups)
             'id', // Chiave primaria della tabella groups
             'id', // Chiave primaria della tabella users
             'group_id', // Chiave esterna in modules che collega ai groups
             'id' // La chiave esterna in group_user che collega a users (Laravel lo risolve automaticamente)
-        );
+            );
+        */
     }
 }
